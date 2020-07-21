@@ -2,18 +2,23 @@ package com.swervedrivespecialties.exampleswerve.commands;
 
 import com.swervedrivespecialties.exampleswerve.Robot;
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
-import edu.wpi.first.wpilibj.command.Command;
+
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import org.frcteam2910.common.robot.Utilities;
 
-public class DriveCommand extends Command {
+public class DriveCommand extends CommandBase {
+
+    private static DrivetrainSubsystem _drive;
 
     public DriveCommand() {
-        requires(DrivetrainSubsystem.getInstance());
+        _drive = DrivetrainSubsystem.getInstance();
+        addRequirements(_drive);
     }
 
     @Override
-    protected void execute() {
+    public void execute() {
         double forward = -Robot.getOi().getPrimaryJoystick().getRawAxis(1);
         forward = Utilities.deadband(forward);
         // Square the forward stick
@@ -29,11 +34,7 @@ public class DriveCommand extends Command {
         // Square the rotation stick
         rotation = Math.copySign(Math.pow(rotation, 2.0), rotation);
 
-        DrivetrainSubsystem.getInstance().drive(new Translation2d(forward, strafe), rotation, true);
+        _drive.drive(new Translation2d(forward, strafe), rotation, true);
     }
 
-    @Override
-    protected boolean isFinished() {
-        return false;
-    }
 }

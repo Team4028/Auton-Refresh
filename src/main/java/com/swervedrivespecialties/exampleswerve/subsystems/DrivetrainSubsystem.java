@@ -29,6 +29,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(0.0);
     private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(0.0);
 
+    private double minSpeedScale = 0.25;
+
     private static DrivetrainSubsystem instance;
 
     private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
@@ -130,6 +132,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public void resetGyroscope() {
         gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
+    }
+
+    public void toggleMinSpeedScale(){
+        minSpeedScale = minSpeedScale < 1? minSpeedScale += 0.25: 0.25;
+    }
+
+    public double getMinSpeedScale(){
+        return minSpeedScale;
     }
 
 }

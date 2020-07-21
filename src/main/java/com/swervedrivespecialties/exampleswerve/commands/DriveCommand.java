@@ -12,8 +12,8 @@ public class DriveCommand extends CommandBase {
 
     private static DrivetrainSubsystem _drive;
 
-    public DriveCommand() {
-        _drive = DrivetrainSubsystem.getInstance();
+    public DriveCommand(DrivetrainSubsystem drive) {
+        _drive = drive;
         addRequirements(_drive);
     }
 

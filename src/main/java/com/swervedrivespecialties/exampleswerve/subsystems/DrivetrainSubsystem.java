@@ -138,6 +138,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
         minSpeedScale = minSpeedScale < 1? minSpeedScale += 0.25: 0.25;
     }
 
+    public void resetMinSpeedScale(){
+        minSpeedScale = 0.25;
+    }
+
     public double getMinSpeedScale(){
         return minSpeedScale;
     }

@@ -134,6 +134,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
         gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
     }
 
+    /**
+    * Toggles Minimum Speed Scale Multiplier by Interval specified
+    * as a constant in DrivetrainSubsystem class
+    */
     public void toggleMinSpeedScale(){
         minSpeedScale = minSpeedScale < 1? minSpeedScale + speedScaleInterval: initialSpeedScale;
     }

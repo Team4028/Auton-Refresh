@@ -3,6 +3,8 @@ package com.swervedrivespecialties.exampleswerve.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
+import com.swervedrivespecialties.exampleswerve.constants.ChassisConstants;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -14,7 +16,6 @@ import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.drivers.Gyroscope;
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.Vector2;
@@ -25,20 +26,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private static final double TRACKWIDTH = 19.5;
     private static final double WHEELBASE = 23.5;
 
-    private static final double FRONT_LEFT_ANGLE_OFFSET = -Math.toRadians(0.0);
-    private static final double FRONT_RIGHT_ANGLE_OFFSET = -Math.toRadians(0.0);
-    private static final double BACK_LEFT_ANGLE_OFFSET = -Math.toRadians(0.0);
-    private static final double BACK_RIGHT_ANGLE_OFFSET = -Math.toRadians(0.0);
-
-    // Default constants probably need to be changed for actual bot
-
-    private static final PidConstants ANGLE_CONSTANTS = new PidConstants(0.5, 0.0, 0.0001); //Angle constants, angle reduction, drive reduction and wheel diameter are defaults
-    private static final double ANGLE_REDUCTION = 18.0/1.0;
-    private static final double WHEEL_DIAMETER = 4.0;
-    private static final double DRIVE_REDUCTION = 8.31/1.0;
-
     private double initialSpeedScale = 0.25;
-    private double speedScaleInterval = 0.25;
+    private double speedScaleInterval = 0.25; //make sure Interval adds evenly to Initial to equal 1, obviously
     private double minSpeedScale = initialSpeedScale;
 
     private static DrivetrainSubsystem instance;
@@ -54,27 +43,27 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
             new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
-            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER), FRONT_LEFT_ANGLE_OFFSET)
-            .angleMotor(frontLeftSteer, ANGLE_CONSTANTS, ANGLE_REDUCTION)
-            .driveMotor(frontLeftDrive, DRIVE_REDUCTION, WHEEL_DIAMETER)
+            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER), ChassisConstants.FRONT_LEFT_ANGLE_OFFSET)
+            .angleMotor(frontLeftSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
+            .driveMotor(frontLeftDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
     private final SwerveModule frontRightModule = new Mk2SwerveModuleBuilder(
             new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
-            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER), FRONT_RIGHT_ANGLE_OFFSET)
-            .angleMotor(frontRightSteer, ANGLE_CONSTANTS, ANGLE_REDUCTION)
-            .driveMotor(frontRightDrive, DRIVE_REDUCTION, WHEEL_DIAMETER)
+            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER), ChassisConstants.FRONT_RIGHT_ANGLE_OFFSET)
+            .angleMotor(frontRightSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
+            .driveMotor(frontRightDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
     private final SwerveModule backLeftModule = new Mk2SwerveModuleBuilder(
             new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
-            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_ENCODER), BACK_LEFT_ANGLE_OFFSET)
-            .angleMotor(backLeftSteer, ANGLE_CONSTANTS, ANGLE_REDUCTION)
-            .driveMotor(backLeftDrive, DRIVE_REDUCTION, WHEEL_DIAMETER)
+            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_ENCODER), ChassisConstants.BACK_LEFT_ANGLE_OFFSET)
+            .angleMotor(backLeftSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
+            .driveMotor(backLeftDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
     private final SwerveModule backRightModule = new Mk2SwerveModuleBuilder(
             new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
-            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER), BACK_RIGHT_ANGLE_OFFSET)
-            .angleMotor(backRightSteer, ANGLE_CONSTANTS, ANGLE_REDUCTION)
-            .driveMotor(backRightDrive, DRIVE_REDUCTION, WHEEL_DIAMETER)
+            .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER), ChassisConstants.BACK_RIGHT_ANGLE_OFFSET)
+            .angleMotor(backRightSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
+            .driveMotor(backRightDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(

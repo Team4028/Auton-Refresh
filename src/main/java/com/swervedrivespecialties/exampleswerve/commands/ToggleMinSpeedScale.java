@@ -12,18 +12,18 @@ import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ToggleMinSpeedScale extends CommandBase {
-  /**
-   * Creates a new testtoggless.
-   */
-  public ToggleMinSpeedScale() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(DrivetrainSubsystem.getInstance());
+  
+  private DrivetrainSubsystem _drive;
+
+  public ToggleMinSpeedScale(DrivetrainSubsystem drive) {
+    _drive = drive;
+    addRequirements(_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    DrivetrainSubsystem.getInstance().toggleMinSpeedScale();
+    _drive.toggleMinSpeedScale();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

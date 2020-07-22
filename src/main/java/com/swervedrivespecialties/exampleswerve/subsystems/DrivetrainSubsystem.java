@@ -135,13 +135,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     /**
-    * Toggles Minimum Speed Scale Multiplier by Interval specified
-    * as a constant in DrivetrainSubsystem class
+    * Toggles Minimum Speed Scale Multiplier by Interval specified as a constant
+    * in DrivetrainSubsystem class
     */
     public void toggleMinSpeedScale(){
         minSpeedScale = minSpeedScale < 1? minSpeedScale + speedScaleInterval: initialSpeedScale;
     }
 
+    /**
+    * Resets Minimum Speed Scale Multiplier to Initial value Specified as a constant
+    * in DrivetrainSubsystem class
+    */
     public void resetMinSpeedScale(){
         minSpeedScale = initialSpeedScale;
     }

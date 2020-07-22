@@ -37,7 +37,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private static final double WHEEL_DIAMETER = 4.0;
     private static final double DRIVE_REDUCTION = 8.31/1.0;
 
-    private double minSpeedScale = 0.25;
+    private double initialSpeedScale = 0.25;
+    private double speedScaleInterval = 0.25;
+    private double minSpeedScale = initialSpeedScale;
 
     private static DrivetrainSubsystem instance;
 
@@ -144,7 +146,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void toggleMinSpeedScale(){
-        minSpeedScale = minSpeedScale < 1? minSpeedScale + 0.25: 0.25;
+        minSpeedScale = minSpeedScale < 1? minSpeedScale + speedScaleInterval: initialSpeedScale;
     }
 
     public void resetMinSpeedScale(){

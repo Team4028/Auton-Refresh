@@ -4,14 +4,17 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.swervedrivespecialties.exampleswerve.RobotMap;
 import com.swervedrivespecialties.exampleswerve.constants.ChassisConstants;
+import com.swervedrivespecialties.exampleswerve.util.util;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -75,6 +78,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     private final Gyroscope gyroscope = new NavX(SPI.Port.kMXP);
 
+    private final SwerveDriveOdometry odometry = new SwerveDriveOdometry(kinematics, getGyroscope(), new Pose2d());
+
     public DrivetrainSubsystem() {
         gyroscope.calibrate();
         gyroscope.setInverted(true); // You might not need to invert the gyro
@@ -93,6 +98,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return instance;
     }
 
+    public void updateOdometry(){
+        odometry.update(getGyroscope(), getModuleStates());
+    }
+
     @Override
     public void periodic() {
         frontLeftModule.updateSensors();
@@ -106,6 +115,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Back Right Module Angle", Math.toDegrees(backRightModule.getCurrentAngle()));
 
         SmartDashboard.putNumber("Gyroscope Angle", gyroscope.getAngle().toDegrees());
+
+        updateOdometry();
 
         frontLeftModule.updateState(TimedRobot.kDefaultPeriod);
         frontRightModule.updateState(TimedRobot.kDefaultPeriod);
@@ -132,6 +143,27 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     public void resetGyroscope() {
         gyroscope.setAdjustmentAngle(gyroscope.getUnadjustedAngle());
+    }
+
+    public Rotation2d getGyroscope(){
+        return Rotation2d.fromDegrees(gyroscope.getAngle().toDegrees());
+    }
+
+    private SwerveModuleState getCurrentState(SwerveModule mod){
+        double velo = util.inToM(mod.getCurrentVelocity());
+        Rotation2d rot = Rotation2d.fromDegrees(Math.toDegrees(mod.getCurrentAngle()));
+        return new SwerveModuleState(velo, rot);
+    }
+
+    private SwerveModuleState[] getModuleStates(){
+        return new SwerveModuleState[] {getCurrentState(frontLeftModule),
+                                        getCurrentState(frontRightModule), 
+                                        getCurrentState(backLeftModule), 
+                                        getCurrentState(backRightModule)};
+    }
+
+    public void resetOdometry(){
+        odometry.resetPosition(new Pose2d(), getGyroscope());
     }
 
     /**

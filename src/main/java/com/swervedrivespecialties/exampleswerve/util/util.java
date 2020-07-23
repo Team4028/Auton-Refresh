@@ -9,4 +9,8 @@ public class util {
     public static double getSpeedScale(double minSS, double additionalSS){
         return minSS + (1 - minSS) * Math.pow(additionalSS, 2);
     }
+
+    public static double inToM(double in){
+        return in / 39.37;
+    }
 }

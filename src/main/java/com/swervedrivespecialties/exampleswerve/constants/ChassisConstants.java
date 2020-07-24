@@ -28,4 +28,8 @@ public class ChassisConstants {
     public static final double WHEEL_DIAMETER = 4.0;
     public static final double DRIVE_REDUCTION = 8.31/1.0;
 
+    public static final double INITIAL_SPEED_SCALE = 0.25;
+    public static final int NUM_SPEEDS = 4;
+    public static final double SPEED_SCALE_INTERVAL = (1 - INITIAL_SPEED_SCALE) / (NUM_SPEEDS - 1);
+
 }

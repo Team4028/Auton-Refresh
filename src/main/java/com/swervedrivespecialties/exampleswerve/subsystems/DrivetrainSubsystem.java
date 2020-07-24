@@ -29,9 +29,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     private static final double TRACKWIDTH = 19.5;
     private static final double WHEELBASE = 23.5;
 
-    private double initialSpeedScale = 0.25;
-    private double speedScaleInterval = 0.25; //make sure Interval adds evenly to Initial to equal 1, obviously
-    private double minSpeedScale = initialSpeedScale;
+    private double minSpeedScale = ChassisConstants.INITIAL_SPEED_SCALE;
 
     private static DrivetrainSubsystem instance;
 
@@ -98,6 +96,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         return instance;
     }
 
+    /**
+     * Update odometry from gyroscope and module states
+     */
     public void updateOdometry(){
         odometry.update(getGyroscope(), getModuleStates());
     }
@@ -162,24 +163,38 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                         getCurrentState(backRightModule)};
     }
 
+    public Translation2d getKinematicVelocity(){
+        ChassisSpeeds chassisSpeeds = kinematics.toChassisSpeeds(getModuleStates());
+        double xVelo = util.mToIn(chassisSpeeds.vxMetersPerSecond);
+        double yVelo = util.mToIn(chassisSpeeds.vyMetersPerSecond);
+        return new Translation2d(xVelo, yVelo);
+    }
+
+    public Translation2d getKinematicPosition(){
+        // Pose2d odpos = odometry.getPoseMeters();
+        // double x = util.mToIn(odpos.getTranslation().getY()); // Need these if you decide to use a vector2
+        // double y = util.mToIn(odpos.getTranslation.getX());
+        return odometry.getPoseMeters().getTranslation();
+    }
+
     public void resetOdometry(){
         odometry.resetPosition(new Pose2d(), getGyroscope());
     }
 
     /**
     * Toggles Minimum Speed Scale Multiplier by Interval specified as a constant
-    * in DrivetrainSubsystem class
+    * in ChassisConstants class
     */
     public void toggleMinSpeedScale(){
-        minSpeedScale = minSpeedScale < 1? minSpeedScale + speedScaleInterval: initialSpeedScale;
+        minSpeedScale = minSpeedScale < 1? minSpeedScale + ChassisConstants.SPEED_SCALE_INTERVAL: ChassisConstants.INITIAL_SPEED_SCALE;
     }
 
     /**
     * Resets Minimum Speed Scale Multiplier to Initial value Specified as a constant
-    * in DrivetrainSubsystem class
+    * in ChassisConstants class
     */
     public void resetMinSpeedScale(){
-        minSpeedScale = initialSpeedScale;
+        minSpeedScale = ChassisConstants.INITIAL_SPEED_SCALE;
     }
 
     public double getMinSpeedScale(){

@@ -11,10 +11,9 @@ import org.frcteam2910.common.robot.Utilities;
 
 public class DriveCommand extends CommandBase {
 
-    private static DrivetrainSubsystem _drive;
+    private static DrivetrainSubsystem _drive = DrivetrainSubsystem.getInstance();
 
-    public DriveCommand(DrivetrainSubsystem drive) {
-        _drive = drive;
+    public DriveCommand() {
         addRequirements(_drive);
     }
 

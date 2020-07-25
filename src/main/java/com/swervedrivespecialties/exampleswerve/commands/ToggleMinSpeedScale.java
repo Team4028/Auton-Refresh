@@ -13,10 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ToggleMinSpeedScale extends CommandBase {
   
-  private DrivetrainSubsystem _drive;
+  private DrivetrainSubsystem _drive = DrivetrainSubsystem.getInstance();
 
-  public ToggleMinSpeedScale(DrivetrainSubsystem drive) {
-    _drive = drive;
+  public ToggleMinSpeedScale() {
     addRequirements(_drive);
   }
 

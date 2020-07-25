@@ -26,8 +26,6 @@ import org.frcteam2910.common.robot.drivers.Mk2SwerveModuleBuilder;
 import org.frcteam2910.common.robot.drivers.NavX;
 
 public class DrivetrainSubsystem extends SubsystemBase {
-    private static final double TRACKWIDTH = 19.5;
-    private static final double WHEELBASE = 23.5;
 
     private double minSpeedScale = ChassisConstants.INITIAL_SPEED_SCALE;
 
@@ -43,35 +41,35 @@ public class DrivetrainSubsystem extends SubsystemBase {
     CANSparkMax backRightSteer = new CANSparkMax(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     private final SwerveModule frontLeftModule = new Mk2SwerveModuleBuilder(
-            new Vector2(TRACKWIDTH / 2.0, WHEELBASE / 2.0))
+            new Vector2(ChassisConstants.TRACKWIDTH / 2.0, ChassisConstants.WHEELBASE / 2.0))
             .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER), ChassisConstants.FRONT_LEFT_ANGLE_OFFSET)
             .angleMotor(frontLeftSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
             .driveMotor(frontLeftDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
     private final SwerveModule frontRightModule = new Mk2SwerveModuleBuilder(
-            new Vector2(TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
+            new Vector2(ChassisConstants.TRACKWIDTH / 2.0, -ChassisConstants.WHEELBASE / 2.0))
             .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER), ChassisConstants.FRONT_RIGHT_ANGLE_OFFSET)
             .angleMotor(frontRightSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
             .driveMotor(frontRightDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
     private final SwerveModule backLeftModule = new Mk2SwerveModuleBuilder(
-            new Vector2(-TRACKWIDTH / 2.0, WHEELBASE / 2.0))
+            new Vector2(-ChassisConstants.TRACKWIDTH / 2.0, ChassisConstants.WHEELBASE / 2.0))
             .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_LEFT_ANGLE_ENCODER), ChassisConstants.BACK_LEFT_ANGLE_OFFSET)
             .angleMotor(backLeftSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
             .driveMotor(backLeftDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
     private final SwerveModule backRightModule = new Mk2SwerveModuleBuilder(
-            new Vector2(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0))
+            new Vector2(-ChassisConstants.TRACKWIDTH / 2.0, -ChassisConstants.WHEELBASE / 2.0))
             .angleEncoder(new AnalogInput(RobotMap.DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER), ChassisConstants.BACK_RIGHT_ANGLE_OFFSET)
             .angleMotor(backRightSteer, ChassisConstants.ANGLE_CONSTANTS, ChassisConstants.ANGLE_REDUCTION)
             .driveMotor(backRightDrive, ChassisConstants.DRIVE_REDUCTION, ChassisConstants.WHEEL_DIAMETER)
             .build();
 
     private final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-            new Translation2d(TRACKWIDTH / 2.0, WHEELBASE / 2.0),
-            new Translation2d(TRACKWIDTH / 2.0, -WHEELBASE / 2.0),
-            new Translation2d(-TRACKWIDTH / 2.0, WHEELBASE / 2.0),
-            new Translation2d(-TRACKWIDTH / 2.0, -WHEELBASE / 2.0)
+            new Translation2d(ChassisConstants.TRACKWIDTH / 2.0, ChassisConstants.WHEELBASE / 2.0),
+            new Translation2d(ChassisConstants.TRACKWIDTH / 2.0, -ChassisConstants.WHEELBASE / 2.0),
+            new Translation2d(-ChassisConstants.TRACKWIDTH / 2.0, ChassisConstants.WHEELBASE / 2.0),
+            new Translation2d(-ChassisConstants.TRACKWIDTH / 2.0, -ChassisConstants.WHEELBASE / 2.0)
     );
 
     private final Gyroscope gyroscope = new NavX(SPI.Port.kMXP);
@@ -126,7 +124,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
-        rotation *= 2.0 / Math.hypot(WHEELBASE, TRACKWIDTH);
+        rotation *= 2.0 / Math.hypot(ChassisConstants.WHEELBASE, ChassisConstants.TRACKWIDTH);
         ChassisSpeeds speeds;
         if (fieldOriented) {
             speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,

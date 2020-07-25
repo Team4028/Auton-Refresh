@@ -1,4 +1,4 @@
-package com.swervedrivespecialties.exampleswerve;
+package com.swervedrivespecialties.autonrefresh;
 
 public class RobotMap {
     public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 2; // CAN
@@ -16,4 +16,8 @@ public class RobotMap {
     public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR = 8; // CAN
     public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER = 3; // Analog
     public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 7; // CAN
+
+    public static final int PRIMARY_CONTROLLER_USB_PORT = 0; 
+    public static final int SECONDARY_CONTROLLER_USB_PORT = 1;
+    public static final int TERTIARY_CONTROLLER_USB_PORT = 2;
 }

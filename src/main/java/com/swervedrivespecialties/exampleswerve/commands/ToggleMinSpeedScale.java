@@ -9,12 +9,13 @@ package com.swervedrivespecialties.exampleswerve.commands;
 
 import com.swervedrivespecialties.exampleswerve.subsystems.DrivetrainSubsystem;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class ToggleMinSpeedScale extends CommandBase {
-  
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+public class ToggleMinSpeedScale extends InstantCommand {
   private DrivetrainSubsystem _drive = DrivetrainSubsystem.getInstance();
-
   public ToggleMinSpeedScale() {
     addRequirements(_drive);
   }
@@ -23,21 +24,5 @@ public class ToggleMinSpeedScale extends CommandBase {
   @Override
   public void initialize() {
     _drive.toggleMinSpeedScale();
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return true;
   }
 }

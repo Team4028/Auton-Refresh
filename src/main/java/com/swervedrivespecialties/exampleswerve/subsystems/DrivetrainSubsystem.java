@@ -163,18 +163,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                         getCurrentState(backRightModule)};
     }
 
-    public Translation2d getKinematicVelocity(){
+    public Vector2 getKinematicVelocity(){
         ChassisSpeeds chassisSpeeds = kinematics.toChassisSpeeds(getModuleStates());
         double xVelo = util.mToIn(chassisSpeeds.vxMetersPerSecond);
         double yVelo = util.mToIn(chassisSpeeds.vyMetersPerSecond);
-        return new Translation2d(xVelo, yVelo);
+        return new Vector2(xVelo, yVelo);
     }
 
-    public Translation2d getKinematicPosition(){
-        // Pose2d odpos = odometry.getPoseMeters();
-        // double x = util.mToIn(odpos.getTranslation().getY()); // Need these if you decide to use a vector2
-        // double y = util.mToIn(odpos.getTranslation.getX());
-        return odometry.getPoseMeters().getTranslation();
+    public Vector2 getKinematicPosition(){
+        Pose2d odpos = odometry.getPoseMeters();
+        double x = util.mToIn(odpos.getTranslation().getY()); // Need these if you decide to use a vector2
+        double y = util.mToIn(odpos.getTranslation().getX());
+        return new Vector2(x,y);
     }
 
     public void resetOdometry(){

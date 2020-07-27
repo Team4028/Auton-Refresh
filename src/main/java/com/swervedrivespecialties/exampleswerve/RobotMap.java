@@ -19,5 +19,5 @@ public class RobotMap {
 
     public static final int PRIMARY_CONTROLLER_USB_PORT = 0; 
     public static final int SECONDARY_CONTROLLER_USB_PORT = 1;
-    public static final int TERTIARY_CONTROLLER_USB_PORT = 2;
+    public static final int TERTIARY_CONTROLLER_USB_PORT = 2;    
 }

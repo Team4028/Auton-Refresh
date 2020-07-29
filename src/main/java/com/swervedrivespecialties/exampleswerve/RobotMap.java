@@ -1,4 +1,4 @@
-package com.swervedrivespecialties.autonrefresh;
+package com.swervedrivespecialties.exampleswerve;
 
 public class RobotMap {
     public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 2; // CAN
